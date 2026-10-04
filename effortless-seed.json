@@ -1,0 +1,56 @@
+{
+  "seed": {
+    "id": "baserow-rulebook",
+    "displayName": "From Baserow",
+    "tagline": "Turn a Baserow database into a rulebook you own.",
+    "description": "Extracts the tables, fields, link-row relationships, formulas and rows of a Baserow database (baserow.io or self-hosted) into a rulebook, then derives everything from it: the Postgres schema, documentation, RuleSpeak, the explainer DAG, an Excel workbook and the browser rulebook editor. Re-pull it with effortless build -id and the rulebook follows the database.",
+    "kind": "root",
+    "category": "root",
+    "stack": "Baserow, Rulebook, Postgres, Markdown, Excel",
+    "requiresInput": "A Baserow database and a database token for it",
+    "mountPath": null,
+    "requires": null,
+    "sortOrder": 125
+  },
+  "subSeeds": [],
+  "replacements": [
+    {
+      "key": "projectName",
+      "label": "What should we call it?",
+      "description": "Short lower-case project name (becomes the repository and database name)",
+      "default": "my-baserow-rulebook"
+    },
+    {
+      "key": "baserowUrl",
+      "label": "Baserow URL (put your self-hosted URL here)",
+      "description": "Leave as https://api.baserow.io for baserow.io; a self-hosted Baserow goes here instead.",
+      "valueType": "url",
+      "default": "https://api.baserow.io"
+    },
+    {
+      "key": "baserowDatabaseId",
+      "label": "Baserow database id",
+      "description": "The numeric database id (in the database URL: /database/<id>/...).",
+      "required": true
+    },
+    {
+      "key": "baserowToken",
+      "label": "Baserow database token",
+      "description": "A database token with read access to that database. Used once for the extraction and not stored.",
+      "secret": true,
+      "valueType": "secret",
+      "persist": false,
+      "required": true
+    },
+    {
+      "key": "userTables",
+      "label": "Which tables hold people?",
+      "description": "The tables whose rows are people who sign in (users, staff, customers). Leave blank if none do.",
+      "valueType": "choice_multi",
+      "discover": "baserow_tables",
+      "dependsOn": "baserowToken",
+      "required": false,
+      "default": ""
+    }
+  ]
+}
